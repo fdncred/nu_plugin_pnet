@@ -1,4 +1,7 @@
-# nu_plugin_net
+# nu_plugin_pnet
+
+This is taken from https://github.com/fennewald/nu_plugin_net and modernized a tiny bit. Thanks! Be sure to read the changelog for tips for Windows users.
+
 A nushell plugin to list system network interfaces
 
 A simple and straightforward plugin. All of the heavy lifting is done by pnet. This package just translates the datatypes into a nu-accepatble format.
@@ -45,10 +48,10 @@ Format may be subject to change.
 
 # Installing
 
-This plugin uses the `capnp` encoding. To register:
+This plugin uses the `msgpack` encoding. To register:
 
 ```
-register -e capnp <path to plugin binary>
+register <path to plugin binary>
 ```
 
 # Changelog
@@ -56,3 +59,24 @@ register -e capnp <path to plugin binary>
 Version 1.1.0
 
 Use `if_index` instead of `index`, fixing the way table indexes are displayed
+
+Version 1.2.0
+
+Renamed from `net` to `pnet` as to not cause a conflict on Windows.
+
+The biggest mistake I made was not realizing that:
+
+1. You have to download Packet.lib from Winpcap Developers Pack from https://www.winpcap.org/devel.htm, making sure to use the x64 version vs the x86 version. You have to put Packet.lib in the root of the nu_plugin_pnet folder for linking.
+2. You have to install npcap installer from https://npcap.com/#download
+
+Otherwise you get these errors when trying to register
+
+```
+register c:\CarTar\debug\nu_plugin_pnet.exe
+  × Error getting signatures
+   ╭─[entry #1:1:1]
+ 1 │ register c:\CarTar\debug\nu_plugin_pnet.exe
+   · ────┬───
+   ·     ╰── Plugin failed to load: unable to get encoding from plugin: failed to fill whole buffer
+   ╰────
+```
