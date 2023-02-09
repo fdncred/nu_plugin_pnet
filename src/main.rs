@@ -2,16 +2,21 @@ mod net;
 
 use net::{flags_to_nu, ips_to_nu, mac_to_nu};
 use nu_plugin::{serve_plugin, EvaluatedCall, LabeledError, MsgPackSerializer, Plugin};
-use nu_protocol::{Category, Signature, Value};
+use nu_protocol::{Category, PluginExample, PluginSignature, Value};
 use pnet::datalink::{self};
 
 pub struct NetPlugin;
 
 impl Plugin for NetPlugin {
-    fn signature(&self) -> Vec<Signature> {
-        vec![Signature::build("pnet")
+    fn signature(&self) -> Vec<PluginSignature> {
+        vec![PluginSignature::build("pnet")
             .usage("List network interfaces")
-            .category(Category::Experimental)]
+            .category(Category::Experimental)
+            .plugin_examples(vec![PluginExample {
+                description: "List network interfaces".into(),
+                example: "pnet".into(),
+                result: None,
+            }])]
     }
 
     fn run(
@@ -20,7 +25,6 @@ impl Plugin for NetPlugin {
         call: &EvaluatedCall,
         _input: &Value,
     ) -> Result<Value, LabeledError> {
-        // eprintln!("hello from netplugin");
         if name != "pnet" {
             return Ok(Value::Nothing { span: call.head });
         }
@@ -60,11 +64,6 @@ impl Plugin for NetPlugin {
                 .collect(),
             span: call.head,
         })
-
-        // Ok(Value::String {
-        //     val: "hello from netplugin".to_string(),
-        //     span: call.head,
-        // })
     }
 }
 

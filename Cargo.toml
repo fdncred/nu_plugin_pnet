@@ -1,18 +1,16 @@
 [package]
-name = "nu_plugin_pnet"
-license = "MIT"
 authors = ["Carson <c@rson.riker.me>", "Darren.Schroeder"]
-keywords = ["nushell", "network", "plugin"]
-homepage = "https://github.com/fennewald/nu_plugin_pnet"
-repository = "https://github.com/fennewald/nu_plugin_pnet"
 description = "A nushell plugin for enumerating network interfaces in a platform-agnostic way"
-version = "1.2.0"
 edition = "2021"
+homepage = "https://github.com/fennewald/nu_plugin_pnet"
+keywords = ["network", "nushell", "plugin"]
+license = "MIT"
+name = "nu_plugin_pnet"
 readme = "README.md"
+repository = "https://github.com/fennewald/nu_plugin_pnet"
+version = "1.2.0"
 
 [dependencies]
-pnet = { version = "0.31", features = ["std"] }
-nu-plugin = { path = "../nushell/crates/nu-plugin", version = "0.73.1" }
-nu-protocol = { path = "../nushell/crates/nu-protocol", version = "0.73.1", features = [
-    "plugin",
-] }
+nu-plugin = { path = "../nushell/crates/nu-plugin", version = "0.75.1" }
+nu-protocol = { path = "../nushell/crates/nu-protocol", version = "0.75.1", features = ["plugin"] }
+pnet = { version = "0.33.0", features = ["std"] }
