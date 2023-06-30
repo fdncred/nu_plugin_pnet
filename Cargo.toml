@@ -11,6 +11,6 @@ repository = "https://github.com/fennewald/nu_plugin_pnet"
 version = "1.2.0"
 
 [dependencies]
-nu-plugin = { path = "../nushell/crates/nu-plugin", version = "0.75.1" }
-nu-protocol = { path = "../nushell/crates/nu-protocol", version = "0.75.1", features = ["plugin"] }
+nu-plugin = { version = "0.82" } 
+nu-protocol = { version = "0.82", features = ["plugin"] }
 pnet = { version = "0.33.0", features = ["std"] }
