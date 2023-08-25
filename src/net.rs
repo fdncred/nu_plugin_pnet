@@ -1,41 +1,20 @@
 use nu_plugin::EvaluatedCall;
-use nu_protocol::Value;
+use nu_protocol::{record, Value};
 use pnet::datalink::{MacAddr, NetworkInterface};
 use pnet::ipnetwork::IpNetwork;
 
 pub fn flags_to_nu(call: &EvaluatedCall, interface: &NetworkInterface) -> Value {
-    Value::Record {
-        cols: vec![
-            "is_up".to_string(),
-            "is_broadcast".to_string(),
-            "is_loopback".to_string(),
-            "is_point_to_point".to_string(),
-            "is_multicast".to_string(),
-        ],
-        vals: vec![
-            Value::Bool {
-                val: interface.is_up(),
-                span: call.head,
-            },
-            Value::Bool {
-                val: interface.is_broadcast(),
-                span: call.head,
-            },
-            Value::Bool {
-                val: interface.is_loopback(),
-                span: call.head,
-            },
-            Value::Bool {
-                val: interface.is_point_to_point(),
-                span: call.head,
-            },
-            Value::Bool {
-                val: interface.is_multicast(),
-                span: call.head,
-            },
-        ],
-        span: call.head,
-    }
+    let span = call.head;
+    Value::record(
+        record! {
+            "is_up" => Value::bool(interface.is_up(), span),
+            "is_broadcast" => Value::bool(interface.is_broadcast(), span),
+            "is_loopback" => Value::bool(interface.is_loopback(), span),
+            "is_point_to_point" => Value::bool(interface.is_point_to_point(), span),
+            "is_multicast" => Value::bool(interface.is_multicast(), span),
+        },
+        span,
+    )
 }
 
 pub fn mac_to_nu(call: &EvaluatedCall, mac: Option<MacAddr>) -> Value {
@@ -54,24 +33,14 @@ pub fn ip_to_nu(call: &EvaluatedCall, ip: &IpNetwork) -> Value {
         IpNetwork::V4(..) => "v4",
         IpNetwork::V6(..) => "v6",
     };
-    Value::Record {
-        cols: vec!["type".to_string(), "addr".to_string(), "prefix".to_string()],
-        vals: vec![
-            Value::String {
-                val: type_name.to_string(),
-                span: call.head,
-            },
-            Value::String {
-                val: format!("{}", ip),
-                span: call.head,
-            },
-            Value::Int {
-                val: ip.prefix() as i64,
-                span: call.head,
-            },
-        ],
-        span: call.head,
-    }
+    Value::record(
+        record! {
+            "type" => Value::string(type_name, call.head),
+            "addr" => Value::string(format!("{}", ip), call.head),
+            "prefix" => Value::int(ip.prefix() as i64, call.head),
+        },
+        call.head,
+    )
 }
 
 /// Convert a slice of ipnetworks to nushell values
