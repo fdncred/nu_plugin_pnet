@@ -26,11 +26,11 @@ impl Plugin for NetPlugin {
         _input: &Value,
     ) -> Result<Value, LabeledError> {
         if name != "pnet" {
-            return Ok(Value::Nothing { span: call.head });
+            return Ok(Value::nothing(call.head));
         }
 
-        Ok(Value::List {
-            vals: datalink::interfaces()
+        Ok(Value::list(
+            datalink::interfaces()
                 .iter_mut()
                 .map(|interface|
                 Value::record(record! {
@@ -42,8 +42,8 @@ impl Plugin for NetPlugin {
                     "flags" => flags_to_nu(call, interface),
                 }, call.head))
                 .collect(),
-            span: call.head,
-        })
+            call.head,
+        ))
     }
 }
 

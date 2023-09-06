@@ -19,12 +19,9 @@ pub fn flags_to_nu(call: &EvaluatedCall, interface: &NetworkInterface) -> Value 
 
 pub fn mac_to_nu(call: &EvaluatedCall, mac: Option<MacAddr>) -> Value {
     if let Some(mac) = mac {
-        Value::String {
-            val: format!("{}", mac),
-            span: call.head,
-        }
+        Value::string(format!("{}", mac), call.head)
     } else {
-        Value::Nothing { span: call.head }
+        Value::nothing(call.head)
     }
 }
 
@@ -45,8 +42,5 @@ pub fn ip_to_nu(call: &EvaluatedCall, ip: &IpNetwork) -> Value {
 
 /// Convert a slice of ipnetworks to nushell values
 pub fn ips_to_nu(call: &EvaluatedCall, ips: &[IpNetwork]) -> Value {
-    Value::List {
-        vals: ips.iter().map(|ip| ip_to_nu(call, ip)).collect(),
-        span: call.head,
-    }
+    Value::list(ips.iter().map(|ip| ip_to_nu(call, ip)).collect(), call.head)
 }
