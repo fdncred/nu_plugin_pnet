@@ -8,9 +8,11 @@ license = "MIT"
 name = "nu_plugin_pnet"
 readme = "README.md"
 repository = "https://github.com/fennewald/nu_plugin_pnet"
-version = "1.2.0"
+version = "1.3.0"
 
 [dependencies]
-nu-plugin = { path = "../nushell/crates/nu-plugin", version = "0.84.1" }
-nu-protocol = { path = "../nushell/crates/nu-protocol", version = "0.84.1", features = ["plugin"] }
+nu-plugin = { path = "../nushell/crates/nu-plugin", version = "0.87.1" }
+nu-protocol = { path = "../nushell/crates/nu-protocol", version = "0.87.1", features = [
+    "plugin",
+] }
 pnet = { version = "0.34.0", features = ["std"] }
