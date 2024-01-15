@@ -22,6 +22,7 @@ impl Plugin for NetPlugin {
     fn run(
         &mut self,
         name: &str,
+        _config: &Option<Value>,
         call: &EvaluatedCall,
         _input: &Value,
     ) -> Result<Value, LabeledError> {
