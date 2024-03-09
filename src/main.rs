@@ -1,7 +1,9 @@
 mod net;
 
 use net::{flags_to_nu, ips_to_nu, mac_to_nu};
-use nu_plugin::{serve_plugin, EvaluatedCall, LabeledError, MsgPackSerializer, Plugin};
+use nu_plugin::{
+    serve_plugin, EngineInterface, EvaluatedCall, LabeledError, MsgPackSerializer, Plugin,
+};
 use nu_protocol::{record, Category, PluginExample, PluginSignature, Value};
 use pnet::datalink::{self};
 
@@ -20,9 +22,9 @@ impl Plugin for NetPlugin {
     }
 
     fn run(
-        &mut self,
+        &self,
         name: &str,
-        _config: &Option<Value>,
+        _engine: &EngineInterface,
         call: &EvaluatedCall,
         _input: &Value,
     ) -> Result<Value, LabeledError> {
