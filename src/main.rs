@@ -3,35 +3,42 @@ mod net;
 use net::{flags_to_nu, ips_to_nu, mac_to_nu};
 use nu_plugin::{
     serve_plugin, EngineInterface, EvaluatedCall, LabeledError, MsgPackSerializer, Plugin,
+    PluginCommand, SimplePluginCommand,
 };
 use nu_protocol::{record, Category, PluginExample, PluginSignature, Value};
 use pnet::datalink::{self};
 
+pub struct PNetPlugin;
+
+impl Plugin for PNetPlugin {
+    fn commands(&self) -> Vec<Box<dyn PluginCommand<Plugin = Self>>> {
+        vec![Box::new(NetPlugin)]
+    }
+}
+
 pub struct NetPlugin;
 
-impl Plugin for NetPlugin {
-    fn signature(&self) -> Vec<PluginSignature> {
-        vec![PluginSignature::build("pnet")
+impl SimplePluginCommand for NetPlugin {
+    type Plugin = PNetPlugin;
+
+    fn signature(&self) -> PluginSignature {
+        PluginSignature::build("pnet")
             .usage("List network interfaces")
             .category(Category::Experimental)
             .plugin_examples(vec![PluginExample {
                 description: "List network interfaces".into(),
                 example: "pnet".into(),
                 result: None,
-            }])]
+            }])
     }
 
     fn run(
         &self,
-        name: &str,
+        _config: &PNetPlugin,
         _engine: &EngineInterface,
         call: &EvaluatedCall,
         _input: &Value,
     ) -> Result<Value, LabeledError> {
-        if name != "pnet" {
-            return Ok(Value::nothing(call.head));
-        }
-
         Ok(Value::list(
             datalink::interfaces()
                 .iter_mut()
@@ -51,5 +58,5 @@ impl Plugin for NetPlugin {
 }
 
 fn main() {
-    serve_plugin(&mut NetPlugin {}, MsgPackSerializer {})
+    serve_plugin(&PNetPlugin, MsgPackSerializer {})
 }
