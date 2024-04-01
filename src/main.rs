@@ -2,10 +2,10 @@ mod net;
 
 use net::{flags_to_nu, ips_to_nu, mac_to_nu};
 use nu_plugin::{
-    serve_plugin, EngineInterface, EvaluatedCall, LabeledError, MsgPackSerializer, Plugin,
-    PluginCommand, SimplePluginCommand,
+    serve_plugin, EngineInterface, EvaluatedCall, MsgPackSerializer, Plugin, PluginCommand,
+    SimplePluginCommand,
 };
-use nu_protocol::{record, Category, PluginExample, PluginSignature, Value};
+use nu_protocol::{record, Category, Example, LabeledError, Signature, Value};
 use pnet::datalink::{self};
 
 pub struct PNetPlugin;
@@ -21,15 +21,24 @@ pub struct NetPlugin;
 impl SimplePluginCommand for NetPlugin {
     type Plugin = PNetPlugin;
 
-    fn signature(&self) -> PluginSignature {
-        PluginSignature::build("pnet")
-            .usage("List network interfaces")
-            .category(Category::Experimental)
-            .plugin_examples(vec![PluginExample {
-                description: "List network interfaces".into(),
-                example: "pnet".into(),
-                result: None,
-            }])
+    fn name(&self) -> &str {
+        "pnet"
+    }
+
+    fn usage(&self) -> &str {
+        "List network interfaces"
+    }
+
+    fn signature(&self) -> Signature {
+        Signature::build(PluginCommand::name(self)).category(Category::Experimental)
+    }
+
+    fn examples(&self) -> Vec<Example> {
+        vec![Example {
+            description: "List network interfaces".into(),
+            example: "pnet".into(),
+            result: None,
+        }]
     }
 
     fn run(
