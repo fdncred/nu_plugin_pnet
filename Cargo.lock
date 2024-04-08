@@ -722,7 +722,7 @@ dependencies = [
 
 [[package]]
 name = "nu-engine"
-version = "0.91.1"
+version = "0.92.2"
 dependencies = [
  "nu-glob",
  "nu-path",
@@ -732,11 +732,11 @@ dependencies = [
 
 [[package]]
 name = "nu-glob"
-version = "0.91.1"
+version = "0.92.2"
 
 [[package]]
 name = "nu-path"
-version = "0.91.1"
+version = "0.92.2"
 dependencies = [
  "dirs-next",
  "omnipath",
@@ -745,7 +745,7 @@ dependencies = [
 
 [[package]]
 name = "nu-plugin"
-version = "0.91.1"
+version = "0.92.2"
 dependencies = [
  "bincode",
  "log",
@@ -763,7 +763,7 @@ dependencies = [
 
 [[package]]
 name = "nu-protocol"
-version = "0.91.1"
+version = "0.92.2"
 dependencies = [
  "byte-unit",
  "chrono",
@@ -784,7 +784,7 @@ dependencies = [
 
 [[package]]
 name = "nu-system"
-version = "0.91.1"
+version = "0.92.2"
 dependencies = [
  "chrono",
  "libc",
@@ -801,11 +801,12 @@ dependencies = [
 
 [[package]]
 name = "nu-utils"
-version = "0.91.1"
+version = "0.92.2"
 dependencies = [
  "crossterm_winapi",
  "log",
  "lscolors",
+ "nix",
  "num-format",
  "strip-ansi-escapes",
  "sys-locale",
