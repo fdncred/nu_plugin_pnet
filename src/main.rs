@@ -29,7 +29,7 @@ impl SimplePluginCommand for NetPlugin {
         "pnet"
     }
 
-    fn usage(&self) -> &str {
+    fn description(&self) -> &str {
         "List network interfaces"
     }
 
